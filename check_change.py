@@ -1,7 +1,7 @@
 from dotenv import load_dotenv
 from requests import get
 from os import getenv
-from sys import exit
+from sys import exit, stderr
 
 NO_CHANGE = 0
 CHANGE = 1
@@ -10,6 +10,8 @@ def get_sha() -> str:
         f"{GITHUB_API_URL}/{OWNER}/{REPO}/commits/{REF}",
         headers=HEADER
     )
+    if resp.status_code != 200:
+        return 'empty'
     return resp._content.decode('utf-8')
 
 def check_sha(sha: str) -> bool:
@@ -41,5 +43,8 @@ if __name__ == '__main__':
     }
 
     sha: str = get_sha()
+    if sha == 'empty':
+        print("Repo is empty.", file=stderr)
+        exit(NO_CHANGE)
     print(f"get new sha: {sha}")
     exit(CHANGE) if check_sha(sha) == True else exit(NO_CHANGE)
