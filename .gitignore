@@ -205,5 +205,6 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
-last_sha.txt
+.last_sha.txt
 Test_CD
+.ssh

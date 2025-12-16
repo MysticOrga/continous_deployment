@@ -15,7 +15,7 @@ def get_sha() -> str:
     return resp._content.decode('utf-8')
 
 def check_sha(sha: str) -> bool:
-    f = open('./last_sha.txt', 'r+')
+    f = open('./.last_sha.txt', 'r+')
     if sha != f.read():
         print("Changed, need to pull last change.")
         f.seek(0)
